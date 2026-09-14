@@ -22,7 +22,8 @@ jobs:
           flutter create --platforms=android --project-name needup /tmp/needup_app
           cp -R /tmp/needup_source/needup_flutter_starter/lib /tmp/needup_app/lib
           cp /tmp/needup_source/needup_flutter_starter/pubspec.yaml /tmp/needup_app/pubspec.yaml
-
+          sed -i 's/colorScheme: \.fromSeed/colorScheme: ColorScheme.fromSeed/g' /tmp/needup_app/lib/main.dart
+          sed -i 's/mainAxisAlignment: \.center/mainAxisAlignment: MainAxisAlignment.center/g' /tmp/needup_app/lib/main.dart
       - name: Build APK
         run: |
           cd /tmp/needup_app
