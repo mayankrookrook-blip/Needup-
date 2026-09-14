@@ -1,0 +1,37 @@
+name: Build NeedUp APK
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Prepare Flutter project
+        run: |
+          unzip -q NeedUp_Flutter_v0.4.zip -d /tmp/needup_source
+          flutter create --platforms=android --project-name needup /tmp/needup_app
+          cp -R /tmp/needup_source/needup_flutter_starter/lib /tmp/needup_app/lib
+          cp /tmp/needup_source/needup_flutter_starter/pubspec.yaml /tmp/needup_app/pubspec.yaml
+
+      - name: Build APK
+        run: |
+          cd /tmp/needup_app
+          flutter pub get
+          flutter build apk --release
+          cp build/app/outputs/flutter-apk/app-release.apk "$GITHUB_WORKSPACE/NeedUp.apk"
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: NeedUp-APK
+          path: NeedUp.apk
