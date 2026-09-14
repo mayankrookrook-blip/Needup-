@@ -26,8 +26,7 @@ jobs:
 
           sed -i 's/colorScheme: \.fromSeed/colorScheme: ColorScheme.fromSeed/g' /tmp/needup_app/lib/main.dart
           sed -i 's/mainAxisAlignment: \.center/mainAxisAlignment: MainAxisAlignment.center/g' /tmp/needup_app/lib/main.dart
-
-          sed -i 's/minSdkVersion = flutter.minSdkVersion/minSdkVersion = 23/g' /tmp/needup_app/android/app/build.gradle.kts
+          sed -i 's/minSdk = flutter.minSdkVersion/minSdk = 23/g' /tmp/needup_app/android/app/build.gradle.kts
 
       - name: Build APK
         run: |
